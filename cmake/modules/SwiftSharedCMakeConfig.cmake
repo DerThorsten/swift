@@ -57,7 +57,11 @@ macro(swift_common_standalone_build_config_llvm product)
       set(LLVM_TABLEGEN_EXE ${LLVM_TABLEGEN})
     else()
       if(CMAKE_CROSSCOMPILING)
-        set(LLVM_NATIVE_BUILD_DIR "${LLVM_BINARY_DIR}/NATIVE")
+        # set(LLVM_NATIVE_BUILD_DIR "${LLVM_BINARY_DIR}/NATIVE")
+
+        set(LLVM_NATIVE_BUILD_DIR "/Users/thorstenbeier/src/swiftdev/build/Ninja-ReleaseAssert/llvm-macosx-arm64")
+
+        message(STATUS "Try to find LLVM native  ${LLVM_NATIVE_BUILD_DIR} since we are cross-compiling.")
         if(NOT EXISTS "${LLVM_NATIVE_BUILD_DIR}")
           message(FATAL_ERROR
             "Attempting to cross-compile swift standalone but no native LLVM build

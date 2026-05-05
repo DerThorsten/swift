@@ -866,6 +866,10 @@ def create_argument_parser():
 
     # Emscripten options
 
+    option(['--build-emscripten-swift'],
+           toggle_true('build_emscriptenswift'),
+           help='build  (parts of) swift for Emscripten target into a '
+                'separate build directory')
     option(['--build-emscripten-stdlib'],
            toggle_true('build_emscriptenstdlib'),
            help='build the stdlib for Emscripten target into a '

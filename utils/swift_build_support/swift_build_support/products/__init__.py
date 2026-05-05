@@ -17,6 +17,9 @@ from .earlyswiftdriver import EarlySwiftDriver
 from .emscriptenstdlib import EmscriptenStdlib
 from .emscriptenswiftsdk import EmscriptenSwiftSDK
 from .emscriptensysroot import EmscriptenSysroot, EmscriptenLLVMRuntimeLibs
+
+from .emscriptenswift import EmscriptenSwift
+
 from .foundation import Foundation
 from .foundationtests import FoundationTests
 from .indexstoredb import IndexStoreDB
@@ -96,4 +99,5 @@ __all__ = [
     'EmscriptenLLVMRuntimeLibs',
     'EmscriptenStdlib',
     'EmscriptenSwiftSDK',
+    'EmscriptenSwift'
 ]

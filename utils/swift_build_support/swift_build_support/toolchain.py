@@ -197,6 +197,13 @@ class Cygwin(Linux):
     pass
 
 
+class Emscripten(GenericUnix):
+    def __init__(self):
+        super(Emscripten, self).__init__([''])
+        self.cc = '/opt/homebrew/bin/emcc'
+        self.cxx = '/opt/homebrew/bin/em++'
+
+
 class Windows(Toolchain):
     def find_tool(self, *names):
         for name in names:
@@ -214,6 +221,7 @@ class Haiku(GenericUnix):
 def host_toolchain(**kwargs):
     sys = platform.system()
     if sys == 'Darwin':
+        # return Emscripten()
         return MacOSX(kwargs.pop('xcrun_toolchain', 'default'))
     elif sys == 'Linux':
         return Linux()

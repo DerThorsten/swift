@@ -78,6 +78,10 @@ class EmscriptenStdlib(cmake_product.CMakeProduct):
                    + list(llvm_cmake.common_options(self))
                    + list(cmake_options)
                    + [llvm_source_dir])
+        
+        # # install!
+        # shell.call(["env", self.toolchain.cmake, "--install", build_dir])
+
         return build_dir
 
     def _build_stdlib(self, host_target, target_triple, llvm_cmake_dir):

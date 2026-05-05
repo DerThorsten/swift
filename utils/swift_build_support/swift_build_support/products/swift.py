@@ -337,8 +337,9 @@ updated without updating swift.py?")
 
     @classmethod
     def get_dependencies(cls):
-        return [cmark.CMark,
-                earlyswiftdriver.EarlySwiftDriver,
+        return [
+                #cmark.CMark,
+                #earlyswiftdriver.EarlySwiftDriver,
                 llvm.LLVM,
                 staticswiftlinux.StaticSwiftLinuxConfig,
                 libcxx.LibCXX]

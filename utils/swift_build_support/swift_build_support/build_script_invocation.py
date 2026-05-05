@@ -705,6 +705,9 @@ class BuildScriptInvocation(object):
                             is_enabled=self.args.build_emscriptenstdlib)
         builder.add_product(products.EmscriptenSwiftSDK,
                             is_enabled=self.args.build_emscriptenstdlib)
+        builder.add_product(products.EmscriptenSwift,
+                                    is_enabled=True)
+
 
         builder.add_product(products.SwiftFoundationTests,
                             is_enabled=self.args.build_foundation)
@@ -750,6 +753,9 @@ class BuildScriptInvocation(object):
         builder.add_product(products.SwiftDriver,
                             is_enabled=self.args.build_swift_driver
                             or self.args.install_swift_driver)
+
+      
+
 
         # Now that we have constructed our pass pipelines using our builder, get
         # the final schedule and finalize the builder.

@@ -31,6 +31,8 @@ class HostSpecificConfiguration(object):
         if stage_dependent_args is None:
             stage_dependent_args = args
 
+        print("stage dependent args: {}".format(stage_dependent_args))
+
         # Compute the set of deployment targets to configure/build.
         if host_target == stage_dependent_args.host_target:
             # This host is the user's desired product, so honor the requested
@@ -43,6 +45,7 @@ class HostSpecificConfiguration(object):
                     stage_dependent_args.build_stdlib_deployment_targets).intersection(
                     set(stage_dependent_args.stdlib_deployment_targets))
         else:
+            print(f"Host target {host_target}  ")
             # Otherwise, this is a host we are building as part of
             # cross-compiling, so we only need the target itself.
             stdlib_targets_to_configure = [host_target]

@@ -312,6 +312,8 @@ class StdlibDeploymentTarget(object):
 
     WASI = Platform("wasi", archs=["wasm32"])
 
+    Emscripten = Platform("emscripten", archs=["wasm32"])
+
     # The list of known platforms.
     known_platforms = [
         OSX,
@@ -328,7 +330,9 @@ class StdlibDeploymentTarget(object):
         Android,
         Windows,
         Haiku,
-        WASI]
+        WASI,
+        Emscripten,
+    ]
 
     # Cache of targets by name.
     _targets_by_name = dict((target.name, target)
@@ -345,6 +349,7 @@ class StdlibDeploymentTarget(object):
         'WATCHOS_SIMULATOR': AppleWatchSimulator.targets,
         'XROS': XROS.targets,
         'XROS_SIMULATOR': XROSSimulator.targets,
+        'EMSCRIPTEN': Emscripten.targets,
     }
 
     @staticmethod
