@@ -226,6 +226,42 @@ class OpenBSDPlatform(Platform):
         return f'-DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"'
 
 
+
+class Platform(object):
+    """
+    Abstract representation of a platform Swift can run on.
+    """
+
+    def __init__(self, name, archs, sdk_name=None):
+        """
+        Create a platform with the given name and list of architectures.
+        """
+        self.name = name
+        self.targets = [Target(self, arch) for arch in archs]
+        # FIXME: Eliminate this argument; apparently the SDK names are
+        # internally a private implementation detail of the build script, so we
+        # should just make them the same as the platform name.
+        self.sdk_name = name.upper() if sdk_name is None else sdk_name
+
+        # Add a property for each arch.
+        for target in self.targets:
+            setattr(self, target.arch, target)
+
+
+    def cmake_options(self, args):
+        """
+        CMake flags to build for a platform, useful for cross-compiling
+        """
+        emscripten_path = args.emscripten_path
+
+        if not emscripten_path:
+            throw RuntimeError('emscripten_path must be set to generate CMake options for '
+                               'the emscripten-wasm32 platform')
+        toolchain_path = Path(emscripten_path) / "cmake"/ "Modules"/"Platform"/"Emscripten.cmake"
+        opt = cmake.CMakeOptions()
+        opt.define('CMAKE_TOOLCHAIN_FILE', toolchain_path)
+        
+
 class Target(object):
     """
     Abstract representation of a target Swift can run on.
@@ -278,7 +314,7 @@ class StdlibDeploymentTarget(object):
     # to build the stdlib as standalone and/or statically linked.
     Freestanding = Platform("freestanding", archs=[
         "i386", "x86_64",
-        "armv7", "armv7s", "armv7k", "armv7m", "armv7em", "armv8m.main", "armv8.1m.main",
+        "armv7", "armv7s", "armv7k", "armv7m", "armv7em",
         "arm64", "arm64e", "arm64_32"])
 
     Linux = Platform("linux", archs=[
@@ -312,6 +348,8 @@ class StdlibDeploymentTarget(object):
 
     WASI = Platform("wasi", archs=["wasm32"])
 
+    Emscripten = Platform("emscripten", archs=["wasm32"])
+
     # The list of known platforms.
     known_platforms = [
         OSX,
@@ -328,7 +366,8 @@ class StdlibDeploymentTarget(object):
         Android,
         Windows,
         Haiku,
-        WASI]
+        WASI,
+        Emscripten]
 
     # Cache of targets by name.
     _targets_by_name = dict((target.name, target)
